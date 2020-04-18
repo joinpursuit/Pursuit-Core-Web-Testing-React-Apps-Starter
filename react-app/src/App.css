@@ -1,0 +1,12 @@
+.avatar-size {
+  height: 50px;
+  width: 50px;
+}
+
+.recent-donations {
+  background-color: #eee;
+}
+
+li {
+  padding-bottom: 20px;
+}
