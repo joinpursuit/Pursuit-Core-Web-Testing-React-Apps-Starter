@@ -33,7 +33,7 @@ describe('Form', () => {
 
   })
 
-  it('Invokes handleFormInput when typing or editing a value', () => {
+  it('handles input changes with handleFormInput when typing or editing a value', () => {
     const formDonor = "Sponge"
     const formCaption = "Come down"
     const formAmount = 350
@@ -60,7 +60,7 @@ describe('Form', () => {
     expect(handleFormInput).toHaveBeenLastCalledWith("amountInput", "500")
   })
 
-  it('Invokes handleSubmit when submitting form', () => {
+  it('Handle form submission with handleSubmit', () => {
     const handleSubmit = jest.fn()
     const { getByTestId } = render(<Form handleSubmit={handleSubmit} />)
 
