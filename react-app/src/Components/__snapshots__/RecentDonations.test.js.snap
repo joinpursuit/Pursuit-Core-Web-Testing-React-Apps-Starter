@@ -1,0 +1,67 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`RecentDonations Displays a list of donation cards 1`] = `
+<div>
+  <ul
+    class="col-4 list-unstyled recent-donations"
+  >
+    <h5
+      class="my-4"
+    >
+      Recent Donations
+    </h5>
+    <li
+      class="media my-2"
+    >
+      <div
+        class="media-body"
+      >
+        <h5
+          class="mt-0 mb-1"
+        >
+          John
+           donated $
+          30
+        </h5>
+        <p>
+          Here take a break from work
+        </p>
+      </div>
+    </li>
+    <li
+      class="media my-2"
+    >
+      <div
+        class="media-body"
+      >
+        <h5
+          class="mt-0 mb-1"
+        >
+          Emily
+           donated $
+          110
+        </h5>
+        <p />
+      </div>
+    </li>
+    <li
+      class="media my-2"
+    >
+      <div
+        class="media-body"
+      >
+        <h5
+          class="mt-0 mb-1"
+        >
+          Sam
+           donated $
+          30
+        </h5>
+        <p>
+          Go to miami
+        </p>
+      </div>
+    </li>
+  </ul>
+</div>
+`;
