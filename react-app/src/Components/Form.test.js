@@ -4,7 +4,7 @@ import userEvent from '@testing-library/user-event';
 import Form from './Form';
 
 describe('Form', () => {
-  it('Displays four input controls: Name, Caption, ammount slider and submit button', () => {
+  it('Displays four input controls: Name, Caption, Amount slider and Donate button', () => {
     const { getByPlaceholderText, getByRole, getByText } = render(<Form />)
     const nameInput = getByPlaceholderText('Jon Doe')
     const captionInput = getByPlaceholderText('Good luck')
