@@ -57,6 +57,63 @@ describe("App", () => {
     expect(getByText(`$${amount}`)).toBeInTheDocument()
   })
 
-  it.todo("Submitting a donation add a new donation to the list of recent donations")
+  it("Submitting a donation resets all fields to its default", () => {
+    const {
+      getByPlaceholderText,
+      getByRole,
+      getByText,
+    } = render(<App />)
+
+    const nameInput = getByPlaceholderText('Jon Doe')
+    const captionInput = getByPlaceholderText('Good luck')
+    const amountSlider = getByRole('slider')
+    const donateButton = getByText('Donate')
+
+    // Fire events
+    userEvent.type(nameInput, "Sponge Bob")
+    userEvent.type(captionInput, "Have a good time in the bottom of the ocean")
+    fireEvent.change(amountSlider, { target: { value: "234" } })
+    userEvent.click(donateButton)
+
+    expect(nameInput).toHaveValue("")
+    expect(captionInput).toHaveValue("")
+    expect(amountSlider).toHaveValue("5")
+
+
+  })
+
+  it("Submitting a donation adds a new donation to the list of recent donations", () => {
+
+    const {
+      getByPlaceholderText,
+      getByRole,
+      getByText,
+    } = render(<App />)
+
+    const nameInput = getByPlaceholderText('Jon Doe')
+    const captionInput = getByPlaceholderText('Good luck')
+    const amountSlider = getByRole('slider')
+    const donateButton = getByText('Donate')
+
+    // Fire events
+    userEvent.type(nameInput, "Sponge Bob")
+    userEvent.type(captionInput, "Have a good time in the bottom of the ocean")
+    fireEvent.change(amountSlider, { target: { value: "234" } })
+    userEvent.click(donateButton)
+
+    expect(getByText('Sponge Bob donated $234')).toBeInTheDocument();
+    expect(getByText("Have a good time in the bottom of the ocean")).toBeInTheDocument();
+
+    // Fire events
+    userEvent.type(nameInput, "Jon Snow")
+    userEvent.type(captionInput, "See you in Winterfell")
+    fireEvent.change(amountSlider, { target: { value: "12" } })
+    userEvent.click(donateButton)
+
+    expect(getByText('Jon Snow donated $12')).toBeInTheDocument();
+    expect(getByText("See you in Winterfell")).toBeInTheDocument();
+
+  })
+
   it.todo("Submitting a donation makes a POST request to /donation")
 })
