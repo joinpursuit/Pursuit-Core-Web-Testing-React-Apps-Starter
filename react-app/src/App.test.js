@@ -60,7 +60,7 @@ describe("App", () => {
     expect(getByText(`$${amount}`)).toBeInTheDocument()
   })
 
-  test("Submitting a donation makes a POST request to API/posts", async () => {
+  test("Submitting a donation makes a POST request to API/posts and adds a new recent donation", async () => {
     axiosMock.post.mockResolvedValueOnce({
       data: {
         "name": "James Bond",
@@ -96,8 +96,12 @@ describe("App", () => {
     })
 
     // Wait and expect that after the async operation (Net request) 
-    // a new p tag with "Bon Voyage" was added  to the recent donations list
-    expect(caption.tagName).toBe("P")
+    // a new donation is displayed to the user
+    const donationHeader = await screen.findByText("James Bond donated $500")
+    expect(donationHeader.tagName).toBe("H5")
+
+    const donationCaptionP = await screen.findByText("Bon Voyage")
+    expect(donationCaptionP.tagName).toBe("P")
   })
 
   test("Submitting a donation resets all fields to its default", async () => {
