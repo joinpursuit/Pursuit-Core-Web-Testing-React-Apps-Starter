@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, fireEvent } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import Form from './Form';
+import Form from '../Form';
 
 describe('Form', () => {
   test('Displays four input controls: Name, Caption, Amount slider and Donate button', () => {

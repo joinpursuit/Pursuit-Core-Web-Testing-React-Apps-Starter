@@ -1,6 +1,6 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import DonationCard from './DonationCard';
+import DonationCard from '../DonationCard';
 
 describe('DonationCard Component', () => {
   test('Display Donor name, message and ammount', () => {

@@ -1,6 +1,6 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import ProgressBar from './ProgressBar';
+import ProgressBar from '../ProgressBar'
 
 describe('ProgressBar', () => {
   test('Displays amount raised of total', () => {
