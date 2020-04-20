@@ -1,7 +1,10 @@
 import React from 'react';
-import { render, fireEvent } from '@testing-library/react';
+import { render, fireEvent, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event';
 import App from './App';
+import axiosMock from 'axios'
+
+jest.mock('axios')
 
 describe("App", () => {
   test('Renders the GoFundMe header', () => {
@@ -57,7 +60,48 @@ describe("App", () => {
     expect(getByText(`$${amount}`)).toBeInTheDocument()
   })
 
-  it("Submitting a donation resets all fields to its default", () => {
+  it("Submitting a donation makes a POST request to API/posts", async () => {
+    axiosMock.post.mockResolvedValueOnce({
+      data: {
+        "name": "James Bond",
+        "caption": "Bon Voyage ",
+        "amount": "500",
+        "id": 101
+      }
+    })
+
+    // Render the App
+    render(<App />)
+
+    // Find elements that are rendering in the screen. We could consider this an 
+    // implicit assertion because if the elements are not found the test will fail
+    const nameInput = screen.getByPlaceholderText('Jon Doe')
+    const captionInput = screen.getByPlaceholderText('Good luck')
+    const amountSlider = screen.getByRole('slider')
+    const donateButton = screen.getByText('Donate')
+
+    // Fire events
+    userEvent.type(nameInput, "James Bond")
+    userEvent.type(captionInput, "Bon Voyage")
+    fireEvent.change(amountSlider, { target: { value: "500" } })
+    userEvent.click(donateButton)
+
+    // Expect that that axios.post was called with the correct values
+    expect(axiosMock.post).toHaveBeenCalledTimes(1)
+    expect(axiosMock.post).toHaveBeenCalledWith(
+      "https://jsonplaceholder.typicode.com/posts", {
+      amount: "500",
+      caption: "Bon Voyage",
+      name: "James Bond"
+    })
+
+    // Wait and expect that after the async operation (Net request) 
+    // a new p tag with "Bon Voyage" was added  to the recent donations list
+    let caption = await screen.findByText("Bon Voyage")
+    expect(caption.tagName).toBe("P")
+  })
+
+  it("Submitting a donation resets all fields to its default", async () => {
     const {
       getByPlaceholderText,
       getByRole,
@@ -115,5 +159,4 @@ describe("App", () => {
 
   })
 
-  it.todo("Submitting a donation makes a POST request to /donation")
 })
