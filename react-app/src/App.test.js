@@ -13,7 +13,7 @@ describe("App", () => {
     expect(header).toBeInTheDocument();
   });
 
-  it("Updates form input values as content is entered in input fields", () => {
+  test("Updates form input values as content is entered in input fields", () => {
     const {
       getByPlaceholderText,
       getByRole,
@@ -60,7 +60,7 @@ describe("App", () => {
     expect(getByText(`$${amount}`)).toBeInTheDocument()
   })
 
-  it("Submitting a donation makes a POST request to API/posts", async () => {
+  test("Submitting a donation makes a POST request to API/posts", async () => {
     axiosMock.post.mockResolvedValueOnce({
       data: {
         "name": "James Bond",
@@ -101,7 +101,7 @@ describe("App", () => {
     expect(caption.tagName).toBe("P")
   })
 
-  it("Submitting a donation resets all fields to its default", async () => {
+  test("Submitting a donation resets all fields to its default", async () => {
     const {
       getByPlaceholderText,
       getByRole,
@@ -126,7 +126,7 @@ describe("App", () => {
 
   })
 
-  it("Submitting a donation adds a new donation to the list of recent donations", () => {
+  test("Submitting a donation adds a new donation to the list of recent donations", () => {
 
     const {
       getByPlaceholderText,

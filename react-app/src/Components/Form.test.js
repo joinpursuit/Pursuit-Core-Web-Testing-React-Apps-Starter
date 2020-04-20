@@ -4,7 +4,7 @@ import userEvent from '@testing-library/user-event';
 import Form from './Form';
 
 describe('Form', () => {
-  it('Displays four input controls: Name, Caption, Amount slider and Donate button', () => {
+  test('Displays four input controls: Name, Caption, Amount slider and Donate button', () => {
     const { getByPlaceholderText, getByRole, getByText } = render(<Form />)
     const nameInput = getByPlaceholderText('Jon Doe')
     const captionInput = getByPlaceholderText('Good luck')
@@ -16,7 +16,7 @@ describe('Form', () => {
     expect(donateButton).toBeInTheDocument()
   })
 
-  it('Display info that is passed as props', () => {
+  test('Display info that is passed as props', () => {
     const formDonor = "Sponge Bob"
     const formCaption = "Come down here"
     const formAmount = 350
@@ -33,7 +33,7 @@ describe('Form', () => {
 
   })
 
-  it('handles input changes with handleFormInput when typing or editing a value', () => {
+  test('handles input changes with handleFormInput when typing or editing a value', () => {
     const formDonor = "Sponge"
     const formCaption = "Come down"
     const formAmount = 350
@@ -60,7 +60,7 @@ describe('Form', () => {
     expect(handleFormInput).toHaveBeenLastCalledWith("amountInput", "500")
   })
 
-  it('Handle form submission with handleSubmit', () => {
+  test('Handle form submission with handleSubmit', () => {
     const handleSubmit = jest.fn()
     const { getByTestId } = render(<Form handleSubmit={handleSubmit} />)
 

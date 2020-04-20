@@ -21,7 +21,7 @@ const sampleDonations = [
 ]
 
 describe('RecentDonations', () => {
-  it('Displays a list of donation cards', () => {
+  test('Displays a list of donation cards', () => {
     const { container, getAllByText } = render(<RecentDonations donations={sampleDonations} />)
     expect(getAllByText(/donated/).length).toBe(sampleDonations.length)
     expect(container).toMatchSnapshot()
