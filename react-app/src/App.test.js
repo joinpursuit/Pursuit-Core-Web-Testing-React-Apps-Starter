@@ -97,21 +97,25 @@ describe("App", () => {
 
     // Wait and expect that after the async operation (Net request) 
     // a new p tag with "Bon Voyage" was added  to the recent donations list
-    let caption = await screen.findByText("Bon Voyage")
     expect(caption.tagName).toBe("P")
   })
 
   test("Submitting a donation resets all fields to its default", async () => {
-    const {
-      getByPlaceholderText,
-      getByRole,
-      getByText,
-    } = render(<App />)
+    axiosMock.post.mockResolvedValueOnce({
+      data: {
+        "name": "Sponge Bob",
+        "caption": "Have a good time in the bottom of the ocean",
+        "amount": "234",
+        "id": 101
+      }
+    })
 
-    const nameInput = getByPlaceholderText('Jon Doe')
-    const captionInput = getByPlaceholderText('Good luck')
-    const amountSlider = getByRole('slider')
-    const donateButton = getByText('Donate')
+    render(<App />)
+
+    const nameInput = screen.getByPlaceholderText('Jon Doe')
+    const captionInput = screen.getByPlaceholderText('Good luck')
+    const amountSlider = screen.getByRole('slider')
+    const donateButton = screen.getByText('Donate')
 
     // Fire events
     userEvent.type(nameInput, "Sponge Bob")
@@ -119,6 +123,10 @@ describe("App", () => {
     fireEvent.change(amountSlider, { target: { value: "234" } })
     userEvent.click(donateButton)
 
+    // Wait until caption paragraph element renders in the screen 
+    await screen.findByText("Have a good time in the bottom of the ocean")
+
+    // Assert that input fields were reset
     expect(nameInput).toHaveValue("")
     expect(captionInput).toHaveValue("")
     expect(amountSlider).toHaveValue("5")
