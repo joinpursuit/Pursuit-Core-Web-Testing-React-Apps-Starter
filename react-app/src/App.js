@@ -1,4 +1,5 @@
 import React from 'react';
+import axios from 'axios';
 import './App.css';
 
 import Header from './Components/Header';
@@ -34,19 +35,30 @@ class App extends React.Component {
     formAmount: 5
   }
 
-  handleSubmit = (e) => {
+  postDonation = async (donation) => {
+    try {
+      // Using jsonplaceholder as api call for illustration purposes only.
+      let { data } = await axios.post("https://jsonplaceholder.typicode.com/posts", donation)
+      return data
+    } catch (err) {
+      console.log('Err ==>', err)
+    }
+  }
+
+  handleSubmit = async (e) => {
+    const { formDonor, formCaption, formAmount, raisedAmount, donations } = this.state
     e.preventDefault()
-    if (this.state.formDonor) {
-      const allDonations = [...this.state.donations];
+    if (formDonor) {
+      const allDonations = [...donations];
       const newDonation = {
-        name: this.state.formDonor,
-        caption: this.state.formCaption,
-        amount: this.state.formAmount
+        name: formDonor,
+        caption: formCaption,
+        amount: formAmount
       }
 
-      allDonations.push(newDonation);
-
-      const total = this.state.raisedAmount + parseInt(this.state.formAmount);
+      let postedDonation = await this.postDonation(newDonation)
+      allDonations.push(postedDonation);
+      const total = raisedAmount + parseInt(formAmount);
 
       this.setState({
         donations: allDonations,
