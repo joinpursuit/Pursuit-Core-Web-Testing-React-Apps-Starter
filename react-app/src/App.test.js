@@ -13,17 +13,12 @@ describe("App", () => {
     expect(header).toBeInTheDocument();
   });
 
-  test("Updates form input values as content is entered in input fields", () => {
-    const {
-      getByPlaceholderText,
-      getByRole,
-      getByDisplayValue,
-      getByText,
-    } = render(<App />)
+  test("Form input values are updated as content is entered in them", () => {
+    render(<App />)
 
-    const nameInput = getByPlaceholderText('Jon Doe')
-    const captionInput = getByPlaceholderText('Good luck')
-    const amountSlider = getByRole('slider')
+    const nameInput = screen.getByPlaceholderText('Jon Doe')
+    const captionInput = screen.getByPlaceholderText('Good luck')
+    const amountSlider = screen.getByRole('slider')
 
     const nameText = "Sponge Bob"
     const captionText = "Have a good time in the bottom of the ocean"
@@ -45,10 +40,10 @@ describe("App", () => {
 
     // 2. Or check that we find an element in the page that by
     // getting by display value and passing the expected new value
-    expect(getByDisplayValue(nameText)).toBeInTheDocument()
+    expect(screen.getByDisplayValue(nameText)).toBeInTheDocument()
 
     // Caption Input
-    expect(getByDisplayValue(captionText)).toBeInTheDocument()
+    expect(screen.getByDisplayValue(captionText)).toBeInTheDocument()
 
     // Amount slider
     // This is an interesting example because we want to test that the
@@ -57,7 +52,7 @@ describe("App", () => {
 
     // And we also want to test that slider changes reflect in the p tag 
     // that displays the actual amount to the user
-    expect(getByText(`$${amount}`)).toBeInTheDocument()
+    expect(screen.getByText(`$${amount}`)).toBeInTheDocument()
   })
 
   test("Submitting a donation makes a POST request to API/posts and adds a new recent donation", async () => {
@@ -134,41 +129,6 @@ describe("App", () => {
     expect(nameInput).toHaveValue("")
     expect(captionInput).toHaveValue("")
     expect(amountSlider).toHaveValue("5")
-
-
-  })
-
-  test("Submitting a donation adds a new donation to the list of recent donations", () => {
-
-    const {
-      getByPlaceholderText,
-      getByRole,
-      getByText,
-    } = render(<App />)
-
-    const nameInput = getByPlaceholderText('Jon Doe')
-    const captionInput = getByPlaceholderText('Good luck')
-    const amountSlider = getByRole('slider')
-    const donateButton = getByText('Donate')
-
-    // Fire events
-    userEvent.type(nameInput, "Sponge Bob")
-    userEvent.type(captionInput, "Have a good time in the bottom of the ocean")
-    fireEvent.change(amountSlider, { target: { value: "234" } })
-    userEvent.click(donateButton)
-
-    expect(getByText('Sponge Bob donated $234')).toBeInTheDocument();
-    expect(getByText("Have a good time in the bottom of the ocean")).toBeInTheDocument();
-
-    // Fire events
-    userEvent.type(nameInput, "Jon Snow")
-    userEvent.type(captionInput, "See you in Winterfell")
-    fireEvent.change(amountSlider, { target: { value: "12" } })
-    userEvent.click(donateButton)
-
-    expect(getByText('Jon Snow donated $12')).toBeInTheDocument();
-    expect(getByText("See you in Winterfell")).toBeInTheDocument();
-
   })
 
 })
