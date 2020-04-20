@@ -24,11 +24,11 @@ describe('ProgressBar', () => {
   test('Displays progress bar with proper percentage', () => {
     const targetAmount = 1000
     const raisedAmount = 170
-    const { getByRole } = render(<ProgressBar targetAmount={targetAmount} raisedAmount={raisedAmount} />)
+    render(<ProgressBar targetAmount={targetAmount} raisedAmount={raisedAmount} />)
 
     const progressText = (raisedAmount * 100 / targetAmount) + "%";
-    const progressbar = getByRole('progressbar');
-    expect(progressbar).toHaveTextContent(progressText)
-    expect(progressbar.style.width).toBe(progressText)
+    const progressBar = screen.getByText(progressText);
+    expect(progressBar).toBeInTheDocument()
+    expect(progressBar.style.width).toBe(progressText)
   })
 })
