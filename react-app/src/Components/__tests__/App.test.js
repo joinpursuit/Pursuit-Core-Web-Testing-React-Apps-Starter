@@ -17,21 +17,21 @@ describe("App", () => {
     render(<App />)
 
     const nameInput = screen.getByPlaceholderText('Jon Doe')
-    const captionInput = screen.getByPlaceholderText('Good luck')
+    const messageInput = screen.getByPlaceholderText('Good luck')
     const amountSlider = screen.getByRole('slider')
 
     const nameText = "Sponge Bob"
-    const captionText = "Have a good time in the bottom of the ocean"
+    const messageText = "Have a good time in the bottom of the ocean"
     const amount = "234"
 
     // Inputs should start empty and default amount is "5"
     expect(nameInput.value).toBe("")
-    expect(captionInput.value).toBe("")
+    expect(messageInput.value).toBe("")
     expect(amountSlider.value).toBe("5")
 
     // Fire events
     userEvent.type(nameInput, nameText)
-    userEvent.type(captionInput, captionText)
+    userEvent.type(messageInput, messageText)
     fireEvent.change(amountSlider, { target: { value: amount } })
 
     // Asserting that the input has an updated value
@@ -42,8 +42,8 @@ describe("App", () => {
     // getting by display value and passing the expected new value
     expect(screen.getByDisplayValue(nameText)).toBeInTheDocument()
 
-    // Caption Input
-    expect(screen.getByDisplayValue(captionText)).toBeInTheDocument()
+    // message Input
+    expect(screen.getByDisplayValue(messageText)).toBeInTheDocument()
 
     // Amount slider
     // This is an interesting example because we want to test that the
@@ -59,7 +59,7 @@ describe("App", () => {
     axiosMock.post.mockResolvedValueOnce({
       data: {
         "name": "James Bond",
-        "caption": "Bon Voyage ",
+        "message": "Bon Voyage ",
         "amount": "500",
         "id": 101
       }
@@ -71,13 +71,13 @@ describe("App", () => {
     // Find elements that are rendering in the screen. We could consider this an 
     // implicit assertion because if the elements are not found the test will fail
     const nameInput = screen.getByPlaceholderText('Jon Doe')
-    const captionInput = screen.getByPlaceholderText('Good luck')
+    const messageInput = screen.getByPlaceholderText('Good luck')
     const amountSlider = screen.getByRole('slider')
     const donateButton = screen.getByText('Donate')
 
     // Fire events
     userEvent.type(nameInput, "James Bond")
-    userEvent.type(captionInput, "Bon Voyage")
+    userEvent.type(messageInput, "Bon Voyage")
     fireEvent.change(amountSlider, { target: { value: "500" } })
     userEvent.click(donateButton)
 
@@ -86,7 +86,7 @@ describe("App", () => {
     expect(axiosMock.post).toHaveBeenCalledWith(
       "https://jsonplaceholder.typicode.com/posts", {
       amount: "500",
-      caption: "Bon Voyage",
+      message: "Bon Voyage",
       name: "James Bond"
     })
 
@@ -95,15 +95,15 @@ describe("App", () => {
     const donationHeader = await screen.findByText("James Bond donated $500")
     expect(donationHeader.tagName).toBe("H5")
 
-    const donationCaptionP = await screen.findByText("Bon Voyage")
-    expect(donationCaptionP.tagName).toBe("P")
+    const donationMessageP = await screen.findByText("Bon Voyage")
+    expect(donationMessageP.tagName).toBe("P")
   })
 
   test("Submitting a donation resets all fields to its default", async () => {
     axiosMock.post.mockResolvedValueOnce({
       data: {
         "name": "Sponge Bob",
-        "caption": "Have a good time in the bottom of the ocean",
+        "message": "Have a good time in the bottom of the ocean",
         "amount": "234",
         "id": 101
       }
@@ -112,22 +112,22 @@ describe("App", () => {
     render(<App />)
 
     const nameInput = screen.getByPlaceholderText('Jon Doe')
-    const captionInput = screen.getByPlaceholderText('Good luck')
+    const messageInput = screen.getByPlaceholderText('Good luck')
     const amountSlider = screen.getByRole('slider')
     const donateButton = screen.getByText('Donate')
 
     // Fire events
     userEvent.type(nameInput, "Sponge Bob")
-    userEvent.type(captionInput, "Have a good time in the bottom of the ocean")
+    userEvent.type(messageInput, "Have a good time in the bottom of the ocean")
     fireEvent.change(amountSlider, { target: { value: "234" } })
     userEvent.click(donateButton)
 
-    // Wait until caption paragraph element renders in the screen 
+    // Wait until message paragraph element renders in the screen 
     await screen.findByText("Have a good time in the bottom of the ocean")
 
     // Assert that input fields were reset
     expect(nameInput).toHaveValue("")
-    expect(captionInput).toHaveValue("")
+    expect(messageInput).toHaveValue("")
     expect(amountSlider).toHaveValue("5")
   })
 

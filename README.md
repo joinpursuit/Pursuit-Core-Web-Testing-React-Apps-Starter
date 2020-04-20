@@ -18,7 +18,7 @@ Displays the welcome banner for the donation page
 
 ### Recent Donations
 
-Displays a list of each of the previous donations, including the amounts, names and captions
+Displays a list of each of the previous donations, including the amounts, names and messages
 
 ### Progress
 
@@ -30,6 +30,6 @@ Displays a list of each of the previous donations, including the amounts, names 
 Should include:
 
 - A field for the donor's name to be entered
-- A field for the caption
+- A field for the message
 - A [range](https://www.w3schools.com/tags/att_input_type_range.asp) that sets the donation amount
 - A "Donate" button

@@ -2,7 +2,7 @@ import React from 'react';
 
 const Form = (props) => {
 
-  const { formDonor, formCaption, formAmount, handleSubmit, handleFormInput } = props
+  const { formDonor, formMessage, formAmount, handleSubmit, handleFormInput } = props
 
   const handleInputChange = (event) => {
     const id = event.target.id;
@@ -25,13 +25,13 @@ const Form = (props) => {
       </div>
 
       <div className="form-group">
-        <label htmlFor='captionInput'>Caption</label>
+        <label htmlFor='messageInput'>message</label>
         <input
           type="text"
           placeholder="Good luck"
           className="form-control"
-          id="captionInput"
-          value={formCaption}
+          id="messageInput"
+          value={formMessage}
           onChange={handleInputChange}
         />
       </div>

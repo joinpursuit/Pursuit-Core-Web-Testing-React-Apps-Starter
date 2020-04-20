@@ -5,17 +5,17 @@ import RecentDonations from '../RecentDonations';
 const sampleDonations = [
   {
     name: 'John',
-    caption: 'Here take a break from work',
+    message: 'Here take a break from work',
     amount: 30
   },
   {
     name: 'Emily',
-    caption: '',
+    message: '',
     amount: 110
   },
   {
     name: 'Sam',
-    caption: 'Go to miami',
+    message: 'Go to miami',
     amount: 30
   }
 ]

@@ -16,22 +16,22 @@ class App extends React.Component {
     donations: [
       {
         name: 'John',
-        caption: 'Here take a break from work',
+        message: 'Here take a break from work',
         amount: 30
       },
       {
         name: 'Emily',
-        caption: '',
+        message: '',
         amount: 110
       },
       {
         name: 'Sam',
-        caption: 'Go to miami',
+        message: 'Go to miami',
         amount: 30
       }
     ],
     formDonor: '',
-    formCaption: '',
+    formMessage: '',
     formAmount: 5
   }
 
@@ -46,13 +46,13 @@ class App extends React.Component {
   }
 
   handleSubmit = async (e) => {
-    const { formDonor, formCaption, formAmount, raisedAmount, donations } = this.state
+    const { formDonor, formMessage, formAmount, raisedAmount, donations } = this.state
     e.preventDefault()
     if (formDonor) {
       const allDonations = [...donations];
       const newDonation = {
         name: formDonor,
-        caption: formCaption,
+        message: formMessage,
         amount: formAmount
       }
 
@@ -64,7 +64,7 @@ class App extends React.Component {
         donations: allDonations,
         raisedAmount: total,
         formDonor: '',
-        formCaption: '',
+        formMessage: '',
         formAmount: 5
       })
     }
@@ -73,8 +73,8 @@ class App extends React.Component {
   handleFormInput = (id, value) => {
     if (id === 'nameInput') {
       this.setState({ formDonor: value })
-    } else if (id === 'captionInput') {
-      this.setState({ formCaption: value })
+    } else if (id === 'messageInput') {
+      this.setState({ formMessage: value })
     } else if (id === 'amountInput') {
       this.setState({ formAmount: value })
     }
@@ -87,7 +87,7 @@ class App extends React.Component {
       raisedAmount,
       targetAmount,
       formDonor,
-      formCaption,
+      formMessage,
       formAmount
     } = this.state
 
@@ -104,7 +104,7 @@ class App extends React.Component {
               <hr />
               <Form
                 formDonor={formDonor}
-                formCaption={formCaption}
+                formMessage={formMessage}
                 formAmount={formAmount}
                 handleSubmit={this.handleSubmit}
                 handleFormInput={this.handleFormInput}

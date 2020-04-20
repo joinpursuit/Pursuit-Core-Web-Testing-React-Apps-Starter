@@ -5,7 +5,7 @@ const Donation = (props) => {
     <li className="media my-2">
       <div className="media-body">
         <h5 className="mt-0 mb-1">{props.name} donated ${props.amount}</h5>
-        <p>{props.caption}</p>
+        <p>{props.message}</p>
       </div>
     </li>
   )

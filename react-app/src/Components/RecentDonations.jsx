@@ -6,7 +6,7 @@ const RecentDonations = props => {
         return <DonationCard
             key={donator.name + index}
             name={donator.name}
-            caption={donator.caption}
+            message={donator.message}
             amount={donator.amount}
         />
     });

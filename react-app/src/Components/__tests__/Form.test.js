@@ -4,57 +4,57 @@ import userEvent from '@testing-library/user-event';
 import Form from '../Form';
 
 describe('Form', () => {
-  test('Displays four input controls: Name, Caption, Amount slider and Donate button', () => {
+  test('Displays four input controls: Name, message, Amount slider and Donate button', () => {
     const { getByPlaceholderText, getByRole, getByText } = render(<Form />)
     const nameInput = getByPlaceholderText('Jon Doe')
-    const captionInput = getByPlaceholderText('Good luck')
+    const messageInput = getByPlaceholderText('Good luck')
     const slider = getByRole('slider')
     const donateButton = getByText('Donate')
     expect(nameInput).toBeInTheDocument()
-    expect(captionInput).toBeInTheDocument()
+    expect(messageInput).toBeInTheDocument()
     expect(slider).toBeInTheDocument()
     expect(donateButton).toBeInTheDocument()
   })
 
   test('Display info that is passed as props', () => {
     const formDonor = "Sponge Bob"
-    const formCaption = "Come down here"
+    const formMessage = "Come down here"
     const formAmount = 350
     const { getByDisplayValue, getByText } = render(
-      <Form formDonor={formDonor} formCaption={formCaption} formAmount={formAmount} />
+      <Form formDonor={formDonor} formMessage={formMessage} formAmount={formAmount} />
     )
 
     const nameInput = getByDisplayValue(formDonor)
-    const captionInput = getByDisplayValue(formCaption)
+    const messageInput = getByDisplayValue(formMessage)
     const amountDisplay = getByText(`$${formAmount}`)
     expect(nameInput).toBeInTheDocument()
-    expect(captionInput).toBeInTheDocument()
+    expect(messageInput).toBeInTheDocument()
     expect(amountDisplay).toBeInTheDocument()
 
   })
 
   test('handles input changes with handleFormInput when typing or editing a value', () => {
     const formDonor = "Sponge"
-    const formCaption = "Come down"
+    const formMessage = "Come down"
     const formAmount = 350
     const handleFormInput = jest.fn()
     const { getByRole, getByDisplayValue } = render(
       <Form
         formDonor={formDonor}
-        formCaption={formCaption}
+        formMessage={formMessage}
         formAmount={formAmount}
         handleFormInput={handleFormInput}
       />
     )
     const nameInput = getByDisplayValue(formDonor)
-    const captionInput = getByDisplayValue(formCaption)
+    const messageInput = getByDisplayValue(formMessage)
     const slider = getByRole('slider')
 
     userEvent.type(nameInput, " Bob")
     expect(handleFormInput).toHaveBeenLastCalledWith("nameInput", " Bob")
 
-    userEvent.type(captionInput, " here")
-    expect(handleFormInput).toHaveBeenLastCalledWith("captionInput", " here")
+    userEvent.type(messageInput, " here")
+    expect(handleFormInput).toHaveBeenLastCalledWith("messageInput", " here")
 
     fireEvent.change(slider, { target: { value: 500 } })
     expect(handleFormInput).toHaveBeenLastCalledWith("amountInput", "500")
