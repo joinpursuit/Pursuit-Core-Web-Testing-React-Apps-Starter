@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, fireEvent } from '@testing-library/react';
+import { render, fireEvent, screen, getByLabelText } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import Form from '../Form';
 
@@ -34,40 +34,46 @@ describe('Form', () => {
   })
 
   test('handles input changes with handleFormInput when typing or editing a value', () => {
-    const formDonor = "Sponge"
-    const formMessage = "Come down"
-    const formAmount = 350
-    const handleFormInput = jest.fn()
-    const { getByRole, getByDisplayValue } = render(
-      <Form
-        formDonor={formDonor}
-        formMessage={formMessage}
-        formAmount={formAmount}
-        handleFormInput={handleFormInput}
-      />
-    )
-    const nameInput = getByDisplayValue(formDonor)
-    const messageInput = getByDisplayValue(formMessage)
-    const slider = getByRole('slider')
+    const handleFormInputMock = jest.fn()
 
-    userEvent.type(nameInput, " Bob")
-    expect(handleFormInput).toHaveBeenLastCalledWith("nameInput", " Bob")
+    render(<Form formDonor={""} formMessage={""} formAmount={""} handleFormInput={handleFormInputMock} />)
 
-    userEvent.type(messageInput, " here")
-    expect(handleFormInput).toHaveBeenLastCalledWith("messageInput", " here")
+    const nameInput = screen.getByLabelText("Name")
+    const messageInput = screen.getByLabelText("Message")
+    const slider = screen.getByLabelText('Amount to Donate')
+
+    userEvent.type(nameInput, "Bob")
+    expect(handleFormInputMock).toHaveBeenCalled()
+    expect(handleFormInputMock).toHaveBeenLastCalledWith("nameInput", "Bob")
+
+    userEvent.type(messageInput, "Here to support")
+    expect(handleFormInputMock).toHaveBeenLastCalledWith("messageInput", "Here to support")
 
     fireEvent.change(slider, { target: { value: 500 } })
-    expect(handleFormInput).toHaveBeenLastCalledWith("amountInput", "500")
+    expect(handleFormInputMock).toHaveBeenLastCalledWith("amountInput", "500")
   })
 
   test('Handle form submission with handleSubmit', () => {
     const handleSubmit = jest.fn()
-    const { getByTestId } = render(<Form handleSubmit={handleSubmit} />)
+    render(<Form handleSubmit={handleSubmit} />)
 
-    const form = getByTestId('form')
+    const form = screen.getByTestId('form')
     fireEvent.submit(form)
     expect(handleSubmit).toHaveBeenCalled()
   })
+
+  // Test passes but error is logged 
+  // see: https://kula.blog/posts/test_on_submit_in_react_testing_library/)
+  // test.skip('Handle form submission with handleSubmit by clicking the Donate button', () => {
+  //   const handleSubmit = jest.fn()
+  //   render(<Form handleSubmit={handleSubmit} />)
+
+  //   const donateButton = screen.getByText('Donate')
+  //   // console.log(donateButton)
+  //   userEvent.click(donateButton)
+  //   expect(handleSubmit).toHaveBeenCalled()
+  // })
+
 
   // Can't be done here because requires state and state is in the parent component (App)
   // it.skip('Inputs get cleared on submit', () => { })

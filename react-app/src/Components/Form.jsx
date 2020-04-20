@@ -25,7 +25,7 @@ const Form = (props) => {
       </div>
 
       <div className="form-group">
-        <label htmlFor='messageInput'>message</label>
+        <label htmlFor='messageInput'>Message</label>
         <input
           type="text"
           placeholder="Good luck"
