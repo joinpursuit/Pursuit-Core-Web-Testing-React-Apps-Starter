@@ -7,6 +7,8 @@ test('DonationCard displays a donors name, amount and message pass through props
   // Render component
   render(<DonationCard name="Alejo" amount="356" message="I hope you have a good time" />)
 
+  // .getByText and the like are queries that come from @testing-library/react
+  // See docs for other queries
   let donationHeading = screen.getByText("Alejo donated $356")
   let messageP = screen.getByText('I hope you have a good time')
 

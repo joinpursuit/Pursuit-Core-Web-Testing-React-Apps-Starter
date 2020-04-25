@@ -8,13 +8,11 @@ describe('Form', () => {
   test('Input change is handled by handleFormInput when field text changes', () => {
     const handleFormInputMock = jest.fn()
 
-    render(<Form handleFormInput={handleFormInputMock} />
-    )
+    render(<Form handleFormInput={handleFormInputMock} />)
 
     let nameInput = screen.getByLabelText("Name")
     let messageInput = screen.getByLabelText("Message")
     let slider = screen.getByLabelText("Amount to Donate")
-
     userEvent.type(nameInput, "Jon Snow")
     expect(handleFormInputMock).toBeCalled()
     expect(handleFormInputMock).toHaveBeenLastCalledWith("nameInput", "Jon Snow")
