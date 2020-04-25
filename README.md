@@ -1,6 +1,6 @@
 # Pursuit-Core-Web-Testing-React-Apps Starter App
 
-> ⚠ The `master` branch is the starter app and has not tests or setup in it. `tested-app` has all tests implemented and `tests-written-during-class` has partial tests, these are the branches want to use for your reference.
+> ⚠ The `master` branch has the starter code and has not tests or setup in it. `tested-app` has all tests implemented and `tests-written-during-class` has partial tests, these are the branches you want to use for your reference and review.
 
 You might remember this app from your React Props Lab
 
